@@ -3,6 +3,31 @@ import { CartComponent } from './cart.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BookService } from 'src/app/services/book.service';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { Book } from 'src/app/models/book.model';
+
+const books: Book[] = [
+  {
+    name: 'book1',
+    author: 'book1',
+    isbn: 'book1',
+    price: 15,
+    amount: 2,
+  },
+  {
+    name: 'book1',
+    author: 'book1',
+    isbn: 'book1',
+    price: 20,
+    amount: 1,
+  },
+  {
+    name: 'book1',
+    author: 'book1',
+    isbn: 'book1',
+    price: 8,
+    amount: 7,
+  },
+];
 
 describe('CartComponent', () => {
   let component: CartComponent;
@@ -14,6 +39,7 @@ describe('CartComponent', () => {
       declarations: [CartComponent],
       imports: [HttpClientTestingModule],
       providers: [BookService],
+      // avoid no sense problems
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
     });
   });
@@ -27,5 +53,12 @@ describe('CartComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('getTotalPrice returns an amount', () => {
+    const totalPrice = component.getTotalPrice(books);
+    expect(totalPrice).toBeGreaterThan(0);
+    expect(totalPrice).not.toBe(0);
+    expect(totalPrice).not.toBeNull();
   });
 });
